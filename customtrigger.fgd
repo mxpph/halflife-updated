@@ -1,0 +1,4 @@
+@SolidClass base(Trigger) = trigger_airaccel : "Trigger Air Acceleration"
+[
+	airaccel(integer) : "Air Acceleration" : 10
+]
