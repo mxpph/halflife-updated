@@ -701,12 +701,12 @@ int CBaseEntity :: IsDormant( void )
 BOOL CBaseEntity :: IsInWorld( void )
 {
 	// position 
-	if (pev->origin.x >= 4096) return FALSE;
-	if (pev->origin.y >= 4096) return FALSE;
-	if (pev->origin.z >= 4096) return FALSE;
-	if (pev->origin.x <= -4096) return FALSE;
-	if (pev->origin.y <= -4096) return FALSE;
-	if (pev->origin.z <= -4096) return FALSE;
+	if (pev->origin.x >= 32768) return FALSE;
+	if (pev->origin.y >= 32768) return FALSE;
+	if (pev->origin.z >= 32768) return FALSE;
+	if (pev->origin.x <= -32768) return FALSE;
+	if (pev->origin.y <= -32768) return FALSE;
+	if (pev->origin.z <= -32768) return FALSE;
 	// speed
 	if (pev->velocity.x >= 2000) return FALSE;
 	if (pev->velocity.y >= 2000) return FALSE;

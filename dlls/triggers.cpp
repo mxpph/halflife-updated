@@ -2072,7 +2072,54 @@ void CTriggerGravity::GravityTouch( CBaseEntity *pOther )
 	pOther->pev->gravity = pev->gravity;
 }
 
+class CTriggerAirAccel : public CBaseTrigger
+{
+public:
+	void Spawn(void);
+	void KeyValue(KeyValueData* pkvd);
+	void EXPORT AirAccelTouch(CBaseEntity* pOther);
 
+	virtual int        Save(CSave& save);
+	virtual int        Restore(CRestore& restore);
+	static    TYPEDESCRIPTION m_SaveData[];
+
+private:
+	float m_flAirAcceleration;
+};
+LINK_ENTITY_TO_CLASS(trigger_airaccel, CTriggerAirAccel);
+
+TYPEDESCRIPTION    CTriggerAirAccel::m_SaveData[] =
+{
+	DEFINE_FIELD(CTriggerAirAccel, m_flAirAcceleration, FIELD_FLOAT),
+};
+
+IMPLEMENT_SAVERESTORE(CTriggerAirAccel, CBaseTrigger);
+
+void CTriggerAirAccel::Spawn(void)
+{
+	InitTrigger();
+	SetTouch(&CTriggerAirAccel::AirAccelTouch);
+}
+
+void CTriggerAirAccel::AirAccelTouch(CBaseEntity* pOther)
+{
+	// Only save on clients
+	if (!pOther->IsPlayer())
+		return;
+
+	CVAR_SET_FLOAT("sv_airaccelerate", m_flAirAcceleration);
+}
+
+void CTriggerAirAccel::KeyValue(KeyValueData* pkvd)
+{
+	if (FStrEq(pkvd->szKeyName, "airaccel"))
+	{
+		m_flAirAcceleration = atof(pkvd->szValue);
+		pkvd->fHandled = TRUE;
+	}
+	else
+		CBaseTrigger::KeyValue(pkvd);
+}
 
 
 

@@ -111,10 +111,8 @@ void CHalfLifeRules :: ClientDisconnected( edict_t *pClient )
 //=========================================================
 float CHalfLifeRules::FlPlayerFallDamage( CBasePlayer *pPlayer )
 {
-	// subtract off the speed at which a player is allowed to fall without being hurt,
-	// so damage will be based on speed beyond that, not the entire fall
-	pPlayer->m_flFallVelocity -= PLAYER_MAX_SAFE_FALL_SPEED;
-	return pPlayer->m_flFallVelocity * DAMAGE_FOR_FALL_SPEED;
+	// disable falldmg
+	return 0;
 }
 
 //=========================================================
